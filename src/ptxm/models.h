@@ -16,6 +16,21 @@ float ptxm_cos_sm70(float x);
 float ptxm_lg2_sm5x(float x);
 float ptxm_ex2_sm5x(float x);
 
+float SASS_MUFU_RCP(float x);
+float SASS_MUFU_COS(float x);
+float SASS_MUFU_SIN(float x);
+float SASS_RRO_SINCOS(float x);
+float SASS_MUFU_LG2(float x);
+float SASS_MUFU_RSQ(float x);
+float SASS_MUFU_SQRT(float x);
+float SASS_RRO_EX2(float x);
+
+/* TODO
+
+uint32_t SASS_MUFU_RSQ64H(uint32_t x);
+uint32_t SASS_MUFU_RCP64H(uint32_t x);
+
+*/
 #ifdef __cplusplus
 }   // extern "C"
 #endif

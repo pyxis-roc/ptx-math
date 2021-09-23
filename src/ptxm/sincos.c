@@ -32,6 +32,22 @@ float ptxm_sin_sm5x_internal(float x, const ptxm_params *params)
     return mufu_sin(RRO_SM5X(x), params);
 }
 
+float SASS_RRO_SINCOS(float x)
+{
+    return RRO_SM5X(x);
+}
+
+float SASS_MUFU_SIN(float x)
+{
+    return mufu_sin(x, &model_params);
+}
+
+float SASS_MUFU_COS(float x)
+{
+    return mufu_cos(x);
+}
+
+
 float mufu_sin(uint32_t reduced, const ptxm_params *params)
 {
     uint32_t sign = reduced >> 31;
