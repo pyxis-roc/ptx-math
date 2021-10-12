@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 
-#include "ptxm/models.h"
+#include "sassm/models.h"
 
 using model_map = std::map<std::string, float (*)(float)>;
 

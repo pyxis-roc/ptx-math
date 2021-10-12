@@ -1,10 +1,10 @@
-add_executable(ptxmvalidate
+add_executable(sassmvalidate
   main.cu
 )
 
-target_compile_features(ptxmvalidate PRIVATE cxx_std_11)
+target_compile_features(sassmvalidate PRIVATE cxx_std_11)
 
-target_include_directories(ptxmvalidate PRIVATE ${PROJECT_SOURCE_DIR}/src)
-target_link_libraries(ptxmvalidate PRIVATE ptx ptxm util)
+target_include_directories(sassmvalidate PRIVATE ${PROJECT_SOURCE_DIR}/src)
+target_link_libraries(sassmvalidate PRIVATE ptx sassm util)
 
-install(TARGETS ptxmvalidate DESTINATION bin)
+install(TARGETS sassmvalidate DESTINATION bin)

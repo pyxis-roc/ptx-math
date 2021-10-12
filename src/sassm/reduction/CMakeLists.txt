@@ -1,4 +1,4 @@
-target_sources(ptxm PRIVATE
+target_sources(sassm PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/rro_sincos.c
   ${CMAKE_CURRENT_SOURCE_DIR}/rro_sincos.h
 )

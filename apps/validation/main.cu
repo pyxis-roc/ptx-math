@@ -15,7 +15,7 @@ static_assert(float_limits::is_iec559, "float not IEEE 754");
 static_assert(!float_limits::traps, "floating-point exceptions enabled");
 
 #include "ptx/ptx.cuh"
-#include "ptxm/models.h"
+#include "sassm/models.h"
 #include "util/cuda.cuh"
 #include "util/progbar.hpp"
 #include "util/pun.hpp"

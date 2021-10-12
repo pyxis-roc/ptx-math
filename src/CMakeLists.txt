@@ -1,7 +1,7 @@
-add_subdirectory(ptxm)
+add_subdirectory(sassm)
 add_subdirectory(tuning)
 
-if(PTXM_ENABLE_CUDA)
+if(SASSM_ENABLE_CUDA)
   add_subdirectory(ptx)
   add_subdirectory(util)
 endif()
