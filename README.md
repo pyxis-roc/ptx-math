@@ -13,7 +13,11 @@ The currently supported SASS functions are:
 - `RRO.EX2`
 - `MUFU.EX2`
 - `MUFU.RSQ`
+- `MUFU.RSQ64H`
 - `MUFU.SQRT`
+- `MUFU.RCP`
+- `MUFU.RCP64H`
+
 
 
 ## Building
