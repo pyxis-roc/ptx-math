@@ -3,6 +3,8 @@ message: "If you use this software, please cite it as below."
 authors:
   - family-names: Carleton
     given-names: Benjamin
+  - family-names: Valpey
+    given-names: Benjamin
 date-released: 2021-08-14
-repository-code: "https://github.com/bcarlet/ptx-math"
-title: "PTX Math: A C implementation of the PTX elementary math functions"
+repository-code: "https://github.com/pyxis-roc/sass-math/tree/8f7c63e68e8478f3ab02b52bcb0912b6a5a3f5ed"
+title: "SASS Math: A C implementation of the SASS elementary math functions"
