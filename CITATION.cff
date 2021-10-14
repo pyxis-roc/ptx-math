@@ -4,8 +4,8 @@ authors:
   - family-names: Carleton
     given-names: Benjamin
   - family-names: Valpey
-  given-names: Benjamin
-  orcid: "https://orcid.org/0000-0002-2245-3022"
+    given-names: Benjamin
+    orcid: "https://orcid.org/0000-0002-2245-3022"
 date-released: 2021-08-14
 repository-code: "https://github.com/pyxis-roc/sass-math/tree/8f7c63e68e8478f3ab02b52bcb0912b6a5a3f5ed"
 title: "SASS Math: A C implementation of the SASS elementary math functions"
