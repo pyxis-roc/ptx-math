@@ -12,7 +12,6 @@ float ptxm_sqrt_sm6x_internal(float x, const ptxm_params *params);
 float ptxm_rsqrt_sm5x_internal(float x, const ptxm_params *params);
 float ptxm_sin_sm5x_internal(float x, const ptxm_params *params);
 float ptxm_lg2_sm5x_internal(float x, const ptxm_params *params);
-float ptxm_ex2_sm5x_internal(float x, const ptxm_params *params);
 
 #ifdef __cplusplus
 }   // extern "C"
