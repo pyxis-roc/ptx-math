@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(ptx-math LANGUAGES C CXX)
+project(ptx-math LANGUAGES C CXX CUDA)
 
 set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_CXX_EXTENSIONS OFF)
