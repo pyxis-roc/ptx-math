@@ -1,4 +1,4 @@
-target_sources(ptxm PRIVATE
+target_sources(sassm PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/rcp_table.c
   ${CMAKE_CURRENT_SOURCE_DIR}/rcp_table.h
   ${CMAKE_CURRENT_SOURCE_DIR}/sqrt_table.c
