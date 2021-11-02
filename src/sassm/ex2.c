@@ -2,6 +2,7 @@
 #include "tuning.h"
 
 #include "tables/ex2_table.h"
+#include "reduction/rro_ex2.h"
 #include "common/bitcast.h"
 #include "common/nan.h"
 #include "common/squarer.h"
@@ -10,8 +11,10 @@
 #include <stdbool.h>
 #include <math.h>
 
+static float mufu_ex2(uint32_t reduced, const ptxm_params *params);
+
 static int min(int a, int b);
-static float fexp2i(float n);
+static float fexp2i(int n);
 
 static const ptxm_params model_params =
 {
@@ -21,21 +24,7 @@ static const ptxm_params model_params =
 
 float ptxm_ex2_sm5x(float x)
 {
-    return ptxm_ex2_sm5x_internal(x, &model_params);
-}
-
-float ptxm_ex2_sm5x_internal(float x, const ptxm_params *params)
-{
-    switch (fpclassify(x))
-    {
-    case FP_NAN:
-        return ptxm_nan();
-    case FP_INFINITE:
-        return signbit(x) ? 0.0f : INFINITY;
-    case FP_ZERO:
-    case FP_SUBNORMAL:
-        return 1.0f;
-    }
+    if (isnan(x)) return ptxm_nan();
 
     bool square_result = false;
 
@@ -45,27 +34,47 @@ float ptxm_ex2_sm5x_internal(float x, const ptxm_params *params)
         square_result = true;
     }
 
-    float integral;
-    x = modff(x, &integral);
+    const float r = mufu_ex2(ptxm_rro_ex2_sm5x(x), &model_params);
 
-    uint32_t x_bits = float_as_u32(x);
+    return square_result ? r * r : r;
+}
 
-    if (x != 0.0f)
+float SASS_RRO_EX2(float x)
+{
+    return u32_as_float(ptxm_rro_ex2_sm5x(x));
+}
+
+float SASS_MUFU_EX2(float x)
+{
+    return mufu_ex2(float_as_u32(x), &model_params);
+}
+
+float mufu_ex2(uint32_t reduced, const ptxm_params *params)
+{
+    uint32_t sign = reduced >> 31;
+    int32_t integral = (reduced >> 23) & MASK_U32(8);
+
+    switch (integral & 0x81u)
     {
-        x_bits |= UINT32_C(1) << 23;
-        x_bits &= MASK_U32(24);
+    case 0x80u:
+        return ptxm_nan();
+    case 0x81u:
+        return sign ? 0.0f : INFINITY;
+    }
 
-        x_bits >>= min(-ilogbf(x), 24);
+    if (sign)
+    {
+        integral = -integral;
 
-        if (x < 0.0f && x_bits != 0u)
+        if (reduced & MASK_U32(23))
         {
-            x_bits = ~x_bits;
-            integral -= 1.0f;
+            reduced = ~reduced;
+            integral -= 1;
         }
     }
 
-    const uint32_t xh = UPPER_SIGNIFICAND(x_bits, EX2_M);
-    const uint32_t xl = LOWER_SIGNIFICAND(x_bits, EX2_M);
+    const uint32_t xh = UPPER_SIGNIFICAND(reduced, EX2_M);
+    const uint32_t xl = LOWER_SIGNIFICAND(reduced, EX2_M);
 
     const uint32_t *const c = params->table[xh];
 
@@ -85,9 +94,8 @@ float ptxm_ex2_sm5x_internal(float x, const ptxm_params *params)
     const uint32_t r_bits = FP_FORMAT(0u, 127u, r_frac);
 
     const float r = u32_as_float(r_bits);
-    const float rec = fexp2i(integral) * r;
 
-    return square_result ? rec * rec : rec;
+    return fexp2i(integral) * r;
 }
 
 int min(int a, int b)
@@ -95,10 +103,10 @@ int min(int a, int b)
     return (a < b) ? a : b;
 }
 
-float fexp2i(float n)
+float fexp2i(int n)
 {
-    if (n > 127.0f) return INFINITY;
-    if (n < -126.0f) return 0.0f;
+    if (n > 127) return INFINITY;
+    if (n < -126) return 0.0f;
 
-    return ldexpf(1.0f, (int)n);
+    return ldexpf(1.0f, n);
 }
