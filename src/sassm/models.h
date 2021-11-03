@@ -24,6 +24,7 @@ float SASS_MUFU_LG2(float x);
 float SASS_MUFU_RSQ(float x);
 float SASS_MUFU_SQRT(float x);
 float SASS_RRO_EX2(float x);
+float SASS_MUFU_EX2(float x);
 
 /* TODO
 
